@@ -5,10 +5,10 @@
 #include "RISCV.h"
 
 int main(int argc, char** argv) {
-	if (argc < 2) {
-		std::cerr << "Invalid Usage! Try: " << argv[0] << " <program file> [entrypoint address] [base address]" << std::endl;
-		return 1;
-	}
+	// if (argc < 2) {
+	// 	std::cerr << "Invalid Usage! Try: " << argv[0] << " <program file> [entrypoint address] [base address]" << std::endl;
+	// 	return 1;
+	// }
 
 	uint32_t entrypoint = 0x0;
 	if (argc >= 3) {
@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
 	}
 
 	try {
-		auto mem = std::make_unique<Memory>(argv[1], mem_start, MEM_SIZE);
+		auto mem = std::make_unique<Memory>(/*argv[1]*/"../rsc/amoadd.w.bin", mem_start, MEM_SIZE);
 		std::unique_ptr<RISCV> hart = std::make_unique<RISCV>(std::move(mem));
 		hart->run(entrypoint);
 	}

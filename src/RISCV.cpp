@@ -8,7 +8,7 @@
 #include "memory.h"
 
 #define XLEN 32
-#define DEBUG_PRINT false
+#define DEBUG_PRINT true
 #define SINGLE_STEP false
 
 #define DEBUG(x) do{ if(DEBUG_PRINT) { (x); if (SINGLE_STEP) std::cin.ignore(); } } while(0)
@@ -602,7 +602,8 @@ void RISCV::execute_instruction()
 	uint32_t insn;
 	if (mem->read_u32(pc, &insn))
 			throw std::runtime_error("Failed fetching next instruction!");
-
+	DEBUG(std::cout << "pc " << pc << ", instr " << std::setbase(16) << insn << std::setbase(10) <<" ");
+	
 	if (insn == 0) { // TODO: remove this
 			is_running = false;
 			return;
@@ -663,9 +664,10 @@ void RISCV::run(uint32_t entrypoint) {
 	is_running = true;
 	regs[0] = 0; // should be a noop
 	regs[2] = mem_start_addr + MEM_SIZE - 4; // set stack pointer incase program assumes it exists
-	while (is_running)
+	int cpt = 0;
+	while (cpt++ < 10)
 	{
-		if (DEBUG_PRINT) print_context();
+		//if (DEBUG_PRINT) print_context();
 		execute_instruction();
 	}
 }

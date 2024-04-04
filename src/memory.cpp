@@ -1,6 +1,7 @@
 #include "memory.h"
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 
 Memory::Memory(const char* program_filename, uint32_t mem_start, uint32_t size): mem_start_addr(mem_start)
@@ -10,6 +11,9 @@ Memory::Memory(const char* program_filename, uint32_t mem_start, uint32_t size):
 		throw std::runtime_error("Failed to open program file!");
 	}
 	program_file.read((char*)mem, MEM_SIZE);
+	std::cout << std::setbase(16);
+	for (int i=0; i < 100; i++) std::cout << "mem_start " << (uint32_t)mem[i] << " in memory\n";
+	std::cout << std::setbase(10);
 	program_file.close();
 }
 
